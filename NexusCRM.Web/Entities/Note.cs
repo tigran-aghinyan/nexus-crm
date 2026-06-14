@@ -10,6 +10,6 @@ public class Note
     [MaxLength(1000)]
     public string Content { get; set; } = null!;
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public int AuthorId { get; set; }
+    public string AuthorId { get; set; } = null!;
     public User? Author { get; set; }
 }

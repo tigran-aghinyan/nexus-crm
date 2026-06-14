@@ -6,7 +6,7 @@ public interface INoteRepository
 {
     // ---------------- FILTERS ----------------
 
-    Task<List<Note>> GetByAuthorIdAsync(int authorId);
+    Task<List<Note>> GetByAuthorIdAsync(string authorId);
 
     Task<List<Note>> GetRecentAsync(int count);
 
@@ -20,7 +20,7 @@ public interface INoteRepository
 
     // ---------------- BUSINESS / CRM USAGE ----------------
 
-    Task<List<Note>> GetTimelineByUserAsync(int userId);
+    Task<List<Note>> GetTimelineByUserAsync(string userId);
 
     Task<List<Note>> GetTimelineByDateRangeAsync(DateTime from, DateTime to);
 

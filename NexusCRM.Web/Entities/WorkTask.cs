@@ -19,7 +19,7 @@ public class WorkTask
     public bool IsCompleted { get; set; } = false;
 
     [Required]
-    public int UserId { get; set; }
+    public string UserId { get; set; } = null!;
     public User? User { get; set; }
 
     [Required]

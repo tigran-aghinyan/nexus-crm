@@ -17,7 +17,7 @@ public class FollowUp
     public int DealId { get; set; }
     public Deal? Deal { get; set; }
     [Required]
-    public int AssignedUserId { get; set; }
+    public string AssignedUserId { get; set; } = null!;
     public User? AssignedUser { get; set; }
 
     public int? TaskId { get; set; }

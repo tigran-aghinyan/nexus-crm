@@ -8,7 +8,7 @@ public interface IFollowUpRepository
 
     Task<List<FollowUp>> GetByDealIdAsync(int dealId);
 
-    Task<List<FollowUp>> GetByUserIdAsync(int userId);
+    Task<List<FollowUp>> GetByUserIdAsync(string userId);
 
     Task<List<FollowUp>> GetByTaskIdAsync(int taskId);
 
@@ -22,7 +22,7 @@ public interface IFollowUpRepository
 
     Task<List<FollowUp>> GetWithDealAsync(int dealId);
 
-    Task<List<FollowUp>> GetWithUserAsync(int userId);
+    Task<List<FollowUp>> GetWithUserAsync(string userId);
 
     // ---------------- BUSINESS ACTIONS ----------------
 
@@ -38,9 +38,9 @@ public interface IFollowUpRepository
 
     // ---------------- DASHBOARD / ANALYTICS ----------------
 
-    Task<int> GetCompletedCountByUserAsync(int userId);
+    Task<int> GetCompletedCountByUserAsync(string userId);
 
-    Task<int> GetPendingCountByUserAsync(int userId);
+    Task<int> GetPendingCountByUserAsync(string userId);
 
     Task<int> GetTotalByDealAsync(int dealId);
 }

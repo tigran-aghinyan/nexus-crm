@@ -4,11 +4,9 @@ namespace NexusCRM.Web.Repositories.Interfaces;
 
 public interface IWorkTaskRepository
 {
-
-
     // ---------------- FILTERS ----------------
 
-    Task<List<WorkTask>> GetByUserIdAsync(int userId);
+    Task<List<WorkTask>> GetByUserIdAsync(string userId);
 
     Task<List<WorkTask>> GetByDealIdAsync(int dealId);
 
@@ -22,19 +20,19 @@ public interface IWorkTaskRepository
 
     Task<WorkTask?> GetWithDetailsAsync(int id);
 
-    Task<List<WorkTask>> GetWithUserAsync(int userId);
+    Task<List<WorkTask>> GetWithUserAsync(string userId);
 
     Task<List<WorkTask>> GetWithDealAsync(int dealId);
 
     // ---------------- BUSINESS ACTIONS ----------------
-
-    Task MarkAsCompletedAsync(int id);
+    // TODO: IMPLEMENTATIONS MUST BE IN SERVICE LAYER
+    /*Task MarkAsCompletedAsync(int id);
 
     Task MarkAsPendingAsync(int id);
 
     Task AssignToUserAsync(int taskId, int userId);
 
-    Task ChangeDeadlineAsync(int taskId, DateTime deadline);
+    Task ChangeDeadlineAsync(int taskId, DateTime deadline);*/
 
     // ---------------- VALIDATION ----------------
 
@@ -42,9 +40,9 @@ public interface IWorkTaskRepository
 
     // ---------------- DASHBOARD / ANALYTICS ----------------
 
-    Task<int> GetCompletedCountByUserAsync(int userId);
+    Task<int> GetCompletedCountByUserAsync(string userId);
 
-    Task<int> GetPendingCountByUserAsync(int userId);
+    Task<int> GetPendingCountByUserAsync(string userId);
 
-    Task<int> GetOverdueCountByUserAsync(int userId);
+    Task<int> GetOverdueCountByUserAsync(string userId);
 }
