@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using NexusCRM.Web.Entities.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace NexusCRM.Web.Entities;
 
