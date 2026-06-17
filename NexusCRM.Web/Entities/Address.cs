@@ -6,13 +6,9 @@ namespace NexusCRM.Web.Entities;
 [Owned]
 public class Address
 {
-    public string? Line1 { get; set; }
-    public string? Line2 { get; set; }
-
-    [Required]
-    public string? City { get; set; }
+    [Required] public string? Country { get; set; }
+    [Required] public string Region { get; set; } = null!;
+    [Required] public string? City { get; set; }
+    [Required] public string Street { get; set; } = null!;
     public string? PostalCode { get; set; }
-
-    [Required]
-    public string? Country { get; set; }
 }
