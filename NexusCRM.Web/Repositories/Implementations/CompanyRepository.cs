@@ -14,7 +14,7 @@ public class CompanyRepository : IRepository<Company>
     public async Task AddAsync(Company entity)
       => await _context.Companies.AddAsync(entity);
 
-    public async Task Delete(Company entity)
+    public void Delete(Company entity)
        => _context.Companies.Remove(entity);
 
     public async Task<ICollection<Company>> GetAllAsync()
@@ -28,7 +28,7 @@ public class CompanyRepository : IRepository<Company>
     public async Task SaveAsync()
         => await _context.SaveChangesAsync();
 
-    public async Task Update(Company entity)
+    public void Update(Company entity)
         => _context.Update(entity);
 
     public async Task<List<Company>> GetActiveAsync()
@@ -181,5 +181,15 @@ public class CompanyRepository : IRepository<Company>
 
         company.IsActive = false;
         await _context.SaveChangesAsync();
+    }
+
+    Task IRepository<Company>.Delete(Company entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task IRepository<Company>.Update(Company entity)
+    {
+        throw new NotImplementedException();
     }
 }
