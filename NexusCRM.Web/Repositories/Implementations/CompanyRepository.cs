@@ -8,16 +8,16 @@ namespace NexusCRM.Web.Repositories.Implementations;
 public class CompanyRepository : IRepository<Company>
 {
     private readonly AppDbContext _context;
-
     public CompanyRepository(AppDbContext context)
         => _context = context;
+
     public async Task AddAsync(Company entity)
       => await _context.Companies.AddAsync(entity);
 
     public async Task Delete(Company entity)
        => _context.Companies.Remove(entity);
 
-    public async Task<ICollection<Company>> GetAllAsync()
+    public async Task<List<Company>> GetAllAsync()
         => await _context.Companies
         .AsNoTracking()
         .ToListAsync();
@@ -28,7 +28,7 @@ public class CompanyRepository : IRepository<Company>
     public async Task SaveAsync()
         => await _context.SaveChangesAsync();
 
-    public async Task Update(Company entity)
+    public void Update(Company entity)
         => _context.Update(entity);
 
     public async Task<List<Company>> GetActiveAsync()
@@ -130,8 +130,8 @@ public class CompanyRepository : IRepository<Company>
             company.Name == name &&
             company.Address.Country == address.Country &&
             company.Address.City == address.City &&
-            company.Address.Line1 == address.Line1 &&
-            company.Address.Line2 == address.Line2 &&
+            company.Address.Region == address.Region &&
+            company.Address.Street == address.Street &&
             company.Address.PostalCode == address.PostalCode
         );
     }

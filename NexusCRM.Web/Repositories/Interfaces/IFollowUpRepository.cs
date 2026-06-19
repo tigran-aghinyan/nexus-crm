@@ -2,7 +2,7 @@
 
 namespace NexusCRM.Web.Repositories.Interfaces;
 
-public interface IFollowUpRepository
+public interface IFollowUpRepository : IRepository<FollowUp>
 {
     // ---------------- CRM FILTERS ----------------
 

@@ -3,7 +3,7 @@ using NexusCRM.Web.Entities.Enums;
 
 namespace NexusCRM.Web.Repositories.Interfaces;
 
-public interface IUserRepository
+public interface IUserRepository : IRepository<User>
 {
     // ---------------- CRM FILTERS ----------------
 

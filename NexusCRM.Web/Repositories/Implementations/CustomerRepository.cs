@@ -21,7 +21,7 @@ public class CustomerRepository : IRepository<Customer>
         _context.Customers.Remove(entity);
     }
 
-    public async Task<ICollection<Customer>> GetAllAsync()
+    public async Task<List<Customer>> GetAllAsync()
        =>await _context.Customers
             .AsNoTracking()
             .ToListAsync();
@@ -32,7 +32,7 @@ public class CustomerRepository : IRepository<Customer>
     public async Task SaveAsync()
         => await _context.SaveChangesAsync();
 
-    public async Task Update(Customer entity)
+    public void Update(Customer entity)
         => _context.Update(entity);
     
 

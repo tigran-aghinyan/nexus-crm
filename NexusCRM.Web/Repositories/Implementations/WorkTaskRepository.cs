@@ -5,7 +5,7 @@ using NexusCRM.Web.Repositories.Interfaces;
 
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class WorkTaskRepository : IRepository<WorkTask>, IWorkTaskRepository
+public class WorkTaskRepository : IWorkTaskRepository
 {
     private readonly AppDbContext _context;
     public WorkTaskRepository(AppDbContext context)
@@ -20,7 +20,7 @@ public class WorkTaskRepository : IRepository<WorkTask>, IWorkTaskRepository
     public async Task<bool> ExistsByIdAsync(int id)
         => await _context.Tasks.AnyAsync(t => t.Id == id);
 
-    public async Task<ICollection<WorkTask>> GetAllAsync()
+    public async Task<List<WorkTask>> GetAllAsync()
         => await _context.Tasks.ToListAsync();
 
     public async Task<List<WorkTask>> GetByDealIdAsync(int dealId)
@@ -62,6 +62,6 @@ public class WorkTaskRepository : IRepository<WorkTask>, IWorkTaskRepository
     public async Task SaveAsync()
         => await _context.SaveChangesAsync();
 
-    public async Task Update(WorkTask entity)
+    public void Update(WorkTask entity)
         => _context.Update(entity);
 }

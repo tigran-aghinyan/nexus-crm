@@ -2,7 +2,7 @@
 
 namespace NexusCRM.Web.Repositories.Interfaces;
 
-public interface INoteRepository
+public interface INoteRepository : IRepository<Note>
 {
     // ---------------- FILTERS ----------------
 

@@ -4,7 +4,7 @@ using NexusCRM.Web.Entities;
 using NexusCRM.Web.Repositories.Interfaces;
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class NoteRepository : IRepository<Note>, INoteRepository
+public class NoteRepository : INoteRepository
 {
     private readonly AppDbContext _context;
     public NoteRepository(AppDbContext context)
@@ -19,8 +19,10 @@ public class NoteRepository : IRepository<Note>, INoteRepository
     public Task<bool> ExistsByIdAsync(int id)
         => _context.Notes.AnyAsync(n => n.Id == id);
 
-    public async Task<ICollection<Note>> GetAllAsync()
-        => await _context.Notes.ToListAsync();
+    public async Task<List<Note>> GetAllAsync()
+        => await _context.Notes.
+            Include(n => n.Author).
+            ToListAsync();
 
     public async Task<List<Note>> GetByAuthorIdAsync(string authorId)
         => await _context.Notes.Where(n => n.AuthorId == authorId).ToListAsync();
@@ -45,7 +47,9 @@ public class NoteRepository : IRepository<Note>, INoteRepository
         => await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
 
     public async Task<List<Note>> GetWithAuthorsAsync()
-        => await _context.Notes.ToListAsync();
+        => await _context.Notes.
+                Include(n => n.Author).
+                ToListAsync();
 
     public async Task SaveAsync()
         => await _context.SaveChangesAsync();
@@ -53,6 +57,6 @@ public class NoteRepository : IRepository<Note>, INoteRepository
     public async Task<List<Note>> SearchAsync(string keyword)
         => await _context.Notes.Where(n => n.Content.Contains(keyword)).ToListAsync();
 
-    public async Task Update(Note entity)
+    public void Update(Note entity)
         => _context.Update(entity);
 }

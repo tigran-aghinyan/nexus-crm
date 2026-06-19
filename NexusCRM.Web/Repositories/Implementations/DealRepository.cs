@@ -20,7 +20,7 @@ public class DealRepository : IRepository<Deal>
     public async Task Delete(Deal entity)
         => _context.Deals.Remove(entity);
 
-    public async Task<ICollection<Deal>> GetAllAsync()
+    public async Task<List<Deal>> GetAllAsync()
         => await _context.Deals.ToListAsync();
 
     public async Task<Deal?> GetByIdAsync(int id)
@@ -29,7 +29,7 @@ public class DealRepository : IRepository<Deal>
     public async Task SaveAsync()
         => await _context.SaveChangesAsync();
 
-    public async Task Update(Deal entity)
+    public void Update(Deal entity)
         => _context.Update(entity);
 
     public async Task<List<Deal>> GetByStatusAsync(DealStatus status)

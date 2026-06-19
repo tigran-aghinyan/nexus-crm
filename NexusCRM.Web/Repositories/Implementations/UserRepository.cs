@@ -5,7 +5,7 @@ using NexusCRM.Web.Entities.Enums;
 using NexusCRM.Web.Repositories.Interfaces;
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class UserRepository : IRepository<User>, IUserRepository
+public class UserRepository : IUserRepository
 {
     private readonly AppDbContext _context;
     public UserRepository(AppDbContext context)
@@ -26,7 +26,7 @@ public class UserRepository : IRepository<User>, IUserRepository
     public async Task<bool> ExistsByUserNameAsync(string userName)
         => await _context.Users.AnyAsync(u => u.UserName == userName);
 
-    public async Task<ICollection<User>> GetAllAsync()
+    public async Task<List<User>> GetAllAsync()
         => await _context.Users.ToListAsync();
 
     public async Task<List<User>> GetByCompanyIdAsync(int companyId)
@@ -53,6 +53,6 @@ public class UserRepository : IRepository<User>, IUserRepository
     public async Task SaveAsync()
         => await _context.SaveChangesAsync();
 
-    public async Task Update(User entity)
+    public void Update(User entity)
         => _context.Update(entity);
 }

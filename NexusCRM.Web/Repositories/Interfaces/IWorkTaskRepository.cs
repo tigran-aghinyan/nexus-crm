@@ -2,7 +2,7 @@
 
 namespace NexusCRM.Web.Repositories.Interfaces;
 
-public interface IWorkTaskRepository
+public interface IWorkTaskRepository : IRepository<WorkTask>
 {
     // ---------------- FILTERS ----------------
 
