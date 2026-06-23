@@ -5,7 +5,7 @@ using NexusCRM.Web.Repositories.Interfaces;
 
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class CompanyRepository : IRepository<Company>
+public class CompanyRepository : ICompanyRepository 
 {
     private readonly AppDbContext _context;
     public CompanyRepository(AppDbContext context)
@@ -14,8 +14,8 @@ public class CompanyRepository : IRepository<Company>
     public async Task AddAsync(Company entity)
       => await _context.Companies.AddAsync(entity);
 
-    public void Delete(Company entity)
-       => _context.Companies.Remove(entity);
+    public async Task Delete(Company entity)
+       =>  _context.Companies.Remove(entity);
 
     public async Task<List<Company>> GetAllAsync()
         => await _context.Companies
@@ -183,12 +183,12 @@ public class CompanyRepository : IRepository<Company>
         await _context.SaveChangesAsync();
     }
 
-    Task IRepository<Company>.Delete(Company entity)
+    public Task<bool> ExistsByNameAsync(string name)
     {
         throw new NotImplementedException();
     }
 
-    Task IRepository<Company>.Update(Company entity)
+    public Task<bool> ExistsByNameAndAddressAsync(string name, int addressId)
     {
         throw new NotImplementedException();
     }

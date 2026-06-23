@@ -6,7 +6,7 @@ public class DetailsFollowUpDto
 {
     public int Id { get; set; }
     public string Content { get; set; } = null!;
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
     public bool isCompleted { get; set; }
     public int DealId { get; set; }
     public string AssignedUserId { get; set; } = null!;

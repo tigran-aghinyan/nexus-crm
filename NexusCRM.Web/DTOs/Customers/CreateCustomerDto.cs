@@ -16,7 +16,7 @@ public class CreateCustomerDto
     public string? PhoneNumber { get; set; }
 
     [Required]
-    public AddressDto Address { get; set; }
+    public AddressDto? Address { get; set; }
 
     [Required]
     public int CompanyId { get; set; }

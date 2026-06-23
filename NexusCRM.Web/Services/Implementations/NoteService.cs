@@ -1,24 +1,20 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Logging.Abstractions;
-using NexusCRM.Web.DTOs.Notes;
+﻿using NexusCRM.Web.DTOs.Notes;
 using NexusCRM.Web.Entities;
 using NexusCRM.Web.Repositories.Interfaces;
 using NexusCRM.Web.Services.Interfaces;
-using static Azure.Core.HttpHeader;
 
 namespace NexusCRM.Web.Services.Implementations;
 
-public class NoteService : INoteService
+public class NoteService(INoteRepository repository) : INoteService
 {
-    private readonly INoteRepository _repository;
-    public NoteService(INoteRepository repository)
-        => _repository = repository;
+    private readonly INoteRepository _repository = repository;
 
-    public async Task<Result<bool>> AddAsync(CreateNoteDto dto)
+    public async Task<Result<bool>> AddAsync(CreateNoteDto? dto)
     {
+        if (dto is null)
+            return Result<bool>.Fail("Note cannot be null");
         if (string.IsNullOrWhiteSpace(dto.Content) || dto.Content.Length > 1000)
-            return Result<bool>.Fail("Message");
+            return Result<bool>.Fail("Invalid note content");
 
         var note = new Note
         {
@@ -215,7 +211,7 @@ public class NoteService : INoteService
         return noteDtos;
     }
     public DetailsNoteDto MapToDetailsDto(Note noteEntity)
-        => new DetailsNoteDto
+        => new()
         {
             Id = noteEntity.Id,
             Content = noteEntity.Content,

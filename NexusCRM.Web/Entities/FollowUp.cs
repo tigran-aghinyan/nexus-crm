@@ -13,14 +13,15 @@ public class FollowUp
     public User? Author { get; set; }
     [Required]
     public bool isCompleted { get; set; } = false;
+
     [Required]
     public int DealId { get; set; }
     public Deal? Deal { get; set; }
+
     [Required]
     public string AssignedUserId { get; set; } = null!;
     public User? AssignedUser { get; set; }
 
     public int? TaskId { get; set; }
-
     public WorkTask? Task { get; set; } = null!;
 }

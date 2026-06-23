@@ -5,11 +5,9 @@ using NexusCRM.Web.Entities.Enums;
 using NexusCRM.Web.Repositories.Interfaces;
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class UserRepository : IUserRepository
+public class UserRepository(AppDbContext context) : IUserRepository
 {
-    private readonly AppDbContext _context;
-    public UserRepository(AppDbContext context)
-        => _context = context;
+    private readonly AppDbContext _context = context;
 
     public async Task AddAsync(User entity)
         => await _context.Users.AddAsync(entity);
@@ -38,6 +36,9 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByIdAsync(int id)
         => await _context.Users.FindAsync(id);
 
+    public async Task<User?> GetByIdAsync(string id)
+        => await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+
     public async Task<User?> GetByPhoneNumberAsync(string phoneNumber)
         => await _context.Users.SingleOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
 
@@ -55,4 +56,7 @@ public class UserRepository : IUserRepository
 
     public void Update(User entity)
         => _context.Update(entity);
+    public async Task<User?> GetByIdentifierAsync(string identifier)
+        => await _context.Users
+            .SingleOrDefaultAsync(u => u.Email == identifier || u.PhoneNumber == identifier);
 }

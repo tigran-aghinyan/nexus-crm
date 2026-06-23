@@ -8,7 +8,5 @@ public class DetailsTaskDto
     public DateTime Deadline { get; set; }
     public bool IsCompleted { get; set; }
     public string UserId { get; set; } = null!;
-    public string? UserName { get; set; }
     public int DealId { get; set; }
-    public string? DealTitle { get; set; }
 }

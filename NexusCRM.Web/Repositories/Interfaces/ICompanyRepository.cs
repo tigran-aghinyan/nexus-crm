@@ -2,7 +2,7 @@
 
 namespace NexusCRM.Web.Repositories.Interfaces;
 
-public interface ICompanyRepository
+public interface ICompanyRepository : IRepository<Company>
 {
     // ---------------- CRM READ METHODS ----------------
 

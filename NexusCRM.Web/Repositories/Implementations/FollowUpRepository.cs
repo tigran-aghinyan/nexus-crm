@@ -5,21 +5,12 @@ using NexusCRM.Web.Repositories.Interfaces;
 
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class FollowUpRepository : IFollowUpRepository
+public class FollowUpRepository(AppDbContext context) : IFollowUpRepository
 {
-    private readonly AppDbContext _context;
-    public FollowUpRepository(AppDbContext context)
-        => _context = context;
+    private readonly AppDbContext _context = context;
 
     public async Task AddAsync(FollowUp entity)
         => await _context.FollowUps.AddAsync(entity);
-
-    public async Task CompleteAllForDealAsync(int dealId)
-    {
-        var followUps = await _context.FollowUps.Where(f => f.DealId == dealId).ToListAsync();
-        foreach (var follUp in followUps)
-            follUp.isCompleted = true;
-    }
 
     public async Task Delete(FollowUp entity)
         => _context.FollowUps.Remove(entity);

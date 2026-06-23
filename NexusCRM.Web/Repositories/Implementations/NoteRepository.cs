@@ -4,11 +4,9 @@ using NexusCRM.Web.Entities;
 using NexusCRM.Web.Repositories.Interfaces;
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class NoteRepository : INoteRepository
+public class NoteRepository(AppDbContext context) : INoteRepository
 {
-    private readonly AppDbContext _context;
-    public NoteRepository(AppDbContext context)
-        => _context = context;
+    private readonly AppDbContext _context = context;
 
     public async Task AddAsync(Note entity)
         => await _context.Notes.AddAsync(entity);

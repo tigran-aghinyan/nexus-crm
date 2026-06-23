@@ -11,5 +11,4 @@ public class DetailsUserDto
     public UserRole Role { get; set; }
     public DateOnly RegDate { get; set; }
     public int CompanyId { get; set; }
-    public string? CompanyName { get; set; }
 }

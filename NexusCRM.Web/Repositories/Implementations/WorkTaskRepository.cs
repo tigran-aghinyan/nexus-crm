@@ -5,11 +5,9 @@ using NexusCRM.Web.Repositories.Interfaces;
 
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class WorkTaskRepository : IWorkTaskRepository
+public class WorkTaskRepository(AppDbContext context) : IWorkTaskRepository
 {
-    private readonly AppDbContext _context;
-    public WorkTaskRepository(AppDbContext context)
-        => _context = context;
+    private readonly AppDbContext _context = context;
 
     public async Task AddAsync(WorkTask entity)
         => await _context.Tasks.AddAsync(entity);

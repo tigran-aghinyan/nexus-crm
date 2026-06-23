@@ -1,5 +1,4 @@
 ﻿using NexusCRM.Web.DTOs.Notes;
-using NexusCRM.Web.Entities;
 
 namespace NexusCRM.Web.Services.Interfaces;
 
@@ -23,5 +22,4 @@ public interface INoteService
 
     // TODO: Adding pagination
     // Task<List<T>> GetPagedAsync(int page, int pageSize);
-
 }
