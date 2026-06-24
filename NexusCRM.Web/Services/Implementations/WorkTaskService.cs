@@ -1,4 +1,5 @@
-﻿using NexusCRM.Web.DTOs.Tasks;
+﻿using NexusCRM.Web.DTOs.Notes;
+using NexusCRM.Web.DTOs.Tasks;
 using NexusCRM.Web.Entities;
 using NexusCRM.Web.Repositories.Interfaces;
 using NexusCRM.Web.Services.Interfaces;
@@ -102,9 +103,10 @@ public class WorkTaskService(IWorkTaskRepository workTaskRepository,
     public async Task<Result<DetailsTaskDto>> GetByIdAsync(int id)
     {
         var task = await _repository.GetByIdAsync(id);
-        var taskDto = MapToDetailsDto(task);
 
-        return Result<DetailsTaskDto>.Success(taskDto);
+        return task is null
+            ? Result<DetailsTaskDto>.Fail("Task Not Found")
+            : Result<DetailsTaskDto>.Success(MapToDetailsDto(task));
     }
 
     public async Task<Result<List<DetailsTaskDto>>> GetByUserIdAsync(string userId)
@@ -183,9 +185,10 @@ public class WorkTaskService(IWorkTaskRepository workTaskRepository,
     public async Task<Result<DetailsTaskDto>> GetWithDetailsAsync(int id)
     {
         var task = await _repository.GetWithDetailsAsync(id);
-        var taskDto = MapToDetailsDto(task);
 
-        return Result<DetailsTaskDto>.Success(taskDto);
+        return task is null
+            ? Result<DetailsTaskDto>.Fail("Task Not Found")
+            : Result<DetailsTaskDto>.Success(MapToDetailsDto(task));
     }
 
     public async Task<Result<List<DetailsTaskDto>>> GetWithUserAsync(string userId)

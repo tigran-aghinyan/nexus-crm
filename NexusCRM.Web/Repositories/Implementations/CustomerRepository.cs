@@ -6,7 +6,7 @@ using NexusCRM.Web.Repositories.Interfaces;
 
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class CustomerRepository : IRepository<Customer>
+public class CustomerRepository : ICustomerRepository
 {
     private readonly AppDbContext _context;
 
@@ -173,5 +173,10 @@ public class CustomerRepository : IRepository<Customer>
             return;
 
         customer.Status = status;
+    }
+
+    Task<List<Customer>> ICustomerRepository.GetByEmailAsync(string email)
+    {
+        throw new NotImplementedException();
     }
 }

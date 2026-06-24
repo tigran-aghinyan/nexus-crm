@@ -7,7 +7,7 @@ using System.ComponentModel.Design;
 
 namespace NexusCRM.Web.Repositories.Implementations;
 
-public class DealRepository : IRepository<Deal>
+public class DealRepository : IDealRepository
 {
     private readonly AppDbContext _context;
 
@@ -173,5 +173,10 @@ public class DealRepository : IRepository<Deal>
         return await _context.Deals
             .Where(deal => deal.CompanyId == companyId)
             .AnyAsync(deal => deal.Title == title);
+    }
+
+    public Task<bool> ExistsByTitleAsync(string title)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -152,12 +152,9 @@ public class FollowUpService(IFollowUpRepository repository) : IFollowUpService
     {
         var followUp = await _repository.GetWithDetailsAsync(id);
 
-        if (followUp is null)
-            return Result<DetailsFollowUpDto?>.Fail("FollowUp Not Found");
-
-        var followUpsDto = MapToDetailsDto(followUp);
-
-        return Result<DetailsFollowUpDto?>.Success(followUpsDto);
+        return followUp is null
+            ? Result<DetailsFollowUpDto?>.Fail("FollowUp Not Found")
+            : Result<DetailsFollowUpDto?>.Success(MapToDetailsDto(followUp));
     }
 
     public async Task<Result<List<DetailsFollowUpDto>>> GetWithUserAsync(string userId)

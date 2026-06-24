@@ -3,7 +3,7 @@ using NexusCRM.Web.Entities.Enums;
 
 namespace NexusCRM.Web.Repositories.Interfaces;
 
-public interface ICustomerRepository
+public interface ICustomerRepository : IRepository<Customer>
 {
 
     // ---------------- CRM READ METHODS ----------------

@@ -1,4 +1,6 @@
-﻿using NexusCRM.Web.DTOs.Notes;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using NexusCRM.Web.DTOs.FollowUps;
+using NexusCRM.Web.DTOs.Notes;
 using NexusCRM.Web.Entities;
 using NexusCRM.Web.Repositories.Interfaces;
 using NexusCRM.Web.Services.Interfaces;
@@ -72,11 +74,10 @@ public class NoteService(INoteRepository repository) : INoteService
     public async Task<Result<DetailsNoteDto>> GetByIdAsync(int id)
     {
         var note = await _repository.GetByIdAsync(id);
-        if (note is null)
-            return Result<DetailsNoteDto>.Fail("Note Not Found");
 
-        var noteDto = MapToDetailsDto(note);
-        return Result<DetailsNoteDto>.Success(noteDto);
+        return note is null
+            ? Result<DetailsNoteDto>.Fail("Note Not Found")
+            : Result<DetailsNoteDto>.Success(MapToDetailsDto(note));
     }
 
     public async Task<Result<List<DetailsNoteDto>>> GetRecentAsync(int count)
@@ -129,26 +130,18 @@ public class NoteService(INoteRepository repository) : INoteService
     public async Task<Result<DetailsNoteDto>> GetWithAuthorAsync(int id)
     {
         var note = await _repository.GetByIdAsync(id);
-        if (note is null)
-            return Result<DetailsNoteDto>.Fail("Note Not Found");
 
-        DetailsNoteDto noteDto = new()
-        {
-            Id = note.Id,
-            Content = note.Content,
-            AuthorId = note.AuthorId,
-            AuthorEmail = note.Author?.Email,
-            AuthorName = note.Author?.UserName
-        };
-        return Result<DetailsNoteDto>.Success(noteDto);
+        return note is null
+            ? Result<DetailsNoteDto>.Fail("Note Not Found")
+            : Result<DetailsNoteDto>.Success(MapToDetailsDto(note));
     }
 
-    public async Task<List<DetailsNoteDto>> GetWithAuthorsAsync()
+    public async Task<Result<List<DetailsNoteDto>>> GetWithAuthorsAsync()
     {
         var noteEntities = await _repository.GetWithAuthorsAsync();
         var noteDtos = MapToDetailsDto(noteEntities);
 
-        return noteDtos;
+        return Result<List<DetailsNoteDto>>.Success(noteDtos);
     }
 
     public async Task<Result<List<DetailsNoteDto>>> SearchAsync(string? keyword)

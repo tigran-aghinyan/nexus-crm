@@ -13,7 +13,7 @@ public interface INoteService
     Task<Result<DetailsNoteDto>> GetWithAuthorAsync(int id);
     Task<Result<List<DetailsNoteDto>>> GetByAuthorIdAsync(string authorId);
     Task<Result<List<DetailsNoteDto>>> GetRecentAsync(int count);
-    Task<List<DetailsNoteDto>> GetWithAuthorsAsync();
+    Task<Result<List<DetailsNoteDto>>> GetWithAuthorsAsync();
     Task<Result<List<DetailsNoteDto>>> GetTimelineByUserAsync(string userId);
     Task<Result<List<DetailsNoteDto>>> GetTimelineByDateRangeAsync(DateTime from, DateTime to);
 

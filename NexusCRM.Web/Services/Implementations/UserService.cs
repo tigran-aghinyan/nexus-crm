@@ -89,11 +89,9 @@ public class UserService(IUserRepository userRepository, ICompanyRepository comp
             return Result<DetailsUserDto>.Fail("Email is required");
         
         var user = await _userRepository.GetByEmailAsync(email);
-        if (user is null)
-            return Result<DetailsUserDto>.Fail("User Not Found");
-
-        var userDto = MapToDetailsDto(user);
-        return Result<DetailsUserDto>.Success(userDto);
+        return user is null
+            ? Result<DetailsUserDto>.Fail("User Not Found")
+            : Result<DetailsUserDto>.Success(MapToDetailsDto(user));
     }
 
     public async Task<Result<DetailsUserDto>> GetByIdAsync(string id)
@@ -102,11 +100,9 @@ public class UserService(IUserRepository userRepository, ICompanyRepository comp
             return Result<DetailsUserDto>.Fail("Invalid user id");
 
         var user = await _userRepository.GetByIdAsync(id);
-        if (user is null)
-            return Result<DetailsUserDto>.Fail("User Not Found");
-
-        var userDto = MapToDetailsDto(user);
-        return Result<DetailsUserDto>.Success(userDto);
+        return user is null
+            ? Result<DetailsUserDto>.Fail("User Not Found")
+            : Result<DetailsUserDto>.Success(MapToDetailsDto(user));
     }
 
     public async Task<Result<DetailsUserDto>> GetByPhoneNumberAsync(string? phoneNumber)
@@ -115,11 +111,9 @@ public class UserService(IUserRepository userRepository, ICompanyRepository comp
             return Result<DetailsUserDto>.Fail("Invalid phone number");
 
         var user = await _userRepository.GetByPhoneNumberAsync(phoneNumber);
-        if (user is null)
-            return Result<DetailsUserDto>.Fail("User Not Found");
-
-        var userDto = MapToDetailsDto(user);
-        return Result<DetailsUserDto>.Success(userDto);
+        return user is null
+            ? Result<DetailsUserDto>.Fail("User Not Found")
+            : Result<DetailsUserDto>.Success(MapToDetailsDto(user));
     }
 
     public async Task<Result<List<DetailsUserDto>>> GetByRoleAsync(UserRole role)
