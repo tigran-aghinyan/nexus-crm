@@ -24,7 +24,7 @@ public interface ICompanyRepository : IRepository<Company>
 
     Task<bool> ExistsByNameAsync(string name);
 
-    Task<bool> ExistsByNameAndAddressAsync(string name, int addressId);
+    Task<bool> ExistsByNameAndAddressAsync(string name, Address address);
 
     // ---------------- RELATIONSHIPS ----------------
 
@@ -37,12 +37,4 @@ public interface ICompanyRepository : IRepository<Company>
     Task<int> GetCustomerCountAsync(int companyId);
 
     Task<int> GetDealCountAsync(int companyId);
-
-
-
-    // ---------------- BUSINESS ACTIONS ----------------
-
-    Task ActivateAsync(int id);
-
-    Task DeactivateAsync(int id);
 }

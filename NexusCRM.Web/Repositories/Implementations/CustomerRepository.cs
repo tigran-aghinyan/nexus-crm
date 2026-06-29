@@ -50,14 +50,10 @@ public class CustomerRepository : ICustomerRepository
     
     public async Task<List<Customer>> SearchAsync(string keyword)
     {
-        var query = _context.Customers.AsNoTracking();
-
-        if (string.IsNullOrWhiteSpace(keyword))
-            return [];
-
         keyword = keyword.Trim();
 
-        return await query
+        return await _context.Customers
+            .AsNoTracking()
             .Where(customer => customer.FullName != null && customer.FullName.Contains(keyword))
             .ToListAsync();
     }
@@ -86,42 +82,25 @@ public class CustomerRepository : ICustomerRepository
 
     public async Task<Customer?> GetByPhoneAsync(string phone)
     {
-        var query = _context.Customers.AsNoTracking();
-
-        if (string.IsNullOrWhiteSpace(phone))
-            return null;
-
-
         phone = phone.Trim();
 
-        return await query
+        return await _context.Customers
             .AsNoTracking()
             .FirstOrDefaultAsync(customer => customer.PhoneNumber == phone);
     }
 
     public async Task<bool> ExistsByEmailAsync(string email)
     {
-        var query = _context.Customers;
-
-        if (string.IsNullOrWhiteSpace(email))
-            return false;
-
         email = email.Trim();
 
-        return await query.AnyAsync(customer => customer.Email == email);
-        
+        return await _context.Customers.AnyAsync(customer => customer.Email == email);
     }
 
     public async Task<bool> ExistsByPhoneAsync(string phone)
     {
-        var query = _context.Customers;
-
-        if(string.IsNullOrWhiteSpace(phone))
-            return false;
-
         phone = phone.Trim();
 
-        return await query.AnyAsync(customer => customer.PhoneNumber != null && customer.PhoneNumber == phone);
+        return await _context.Customers.AnyAsync(customer => customer.PhoneNumber != null && customer.PhoneNumber == phone);
     }
 
     public async Task<Customer?> GetWithDetailsAsync(int id)
@@ -143,40 +122,4 @@ public class CustomerRepository : ICustomerRepository
     public async Task<int> GetDealCountAsync(int customerId)
         => await _context.Deals
             .CountAsync(deal => deal.CustomerId == customerId);
-    
-
-    public async Task ActivateAsync(int id)
-    {
-        var customer = await _context.Customers.FindAsync(id);
-
-        if(customer is null || customer.Status == CustomerStatus.Active)
-            return;
-
-        customer.Status = CustomerStatus.Active;
-    }
-
-    public async Task DeactivateAsync(int id)
-    {
-        var customer = await _context.Customers.FindAsync(id);
-
-        if (customer is null || customer.Status == CustomerStatus.Inactive)
-            return;
-
-        customer.Status = CustomerStatus.Inactive;
-    }
-
-    public async Task ChangeStatusAsync(int id, CustomerStatus status)
-    {
-        var customer = await _context.Customers.FindAsync(id);
-
-        if (customer is null || customer.Status == status)
-            return;
-
-        customer.Status = status;
-    }
-
-    Task<List<Customer>> ICustomerRepository.GetByEmailAsync(string email)
-    {
-        throw new NotImplementedException();
-    }
 }

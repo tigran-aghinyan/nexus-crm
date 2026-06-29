@@ -29,18 +29,6 @@ public interface IDealRepository : IRepository<Deal>
 
     Task<List<Deal>> GetWithCompanyAsync(int companyId);
 
-    // ---------------- BUSINESS LOGIC ----------------
-
-    Task ChangeStatusAsync(int id, DealStatus status);
-
-    Task CloseAsWonAsync(int id);
-
-    Task CloseAsLostAsync(int id);
-
-    Task UpdateEstimatedValueAsync(int id, decimal value);
-
-    Task UpdateDeadlineAsync(int id, DateTime? deadline);
-
     // ---------------- ANALYTICS / DASHBOARD ----------------
 
     Task<decimal> GetTotalEstimatedValueByCompanyAsync(int companyId);
@@ -51,5 +39,5 @@ public interface IDealRepository : IRepository<Deal>
 
     // ---------------- VALIDATION ----------------
 
-    Task<bool> ExistsByTitleAsync(string title);
+    Task<bool> ExistsByTitleAsync(string title, int companyId);
 }

@@ -16,7 +16,7 @@ public interface ICustomerRepository : IRepository<Customer>
 
     Task<List<Customer>> GetByCompanyIdAsync(int companyId);
 
-    Task<List<Customer>> GetByEmailAsync(string email);
+    Task<Customer?> GetByEmailAsync(string email);
 
     Task<Customer?> GetByPhoneAsync(string phone);
 
@@ -33,11 +33,4 @@ public interface ICustomerRepository : IRepository<Customer>
     Task<Customer?> GetWithDealsAsync(int id);
 
     Task<int> GetDealCountAsync(int customerId);
-
-    // ---------------- BUSINESS ACTIONS ----------------
-
-    Task ActivateAsync(int id);
-
-    Task DeactivateAsync(int id);
-    Task ChangeStatusAsync(int id, CustomerStatus status);
 }

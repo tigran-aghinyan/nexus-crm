@@ -38,91 +38,68 @@ public class CompanyRepository : ICompanyRepository
             .ToListAsync();
     public async Task<List<Company>> SearchAsync(string keyword)
     {
-        var query = _context.Companies
-            .AsNoTracking();
-
-        if (string.IsNullOrWhiteSpace(keyword))
-            return [];
-
         keyword = keyword.Trim();
 
-        return await query
+        return await _context.Companies
+            .AsNoTracking()
             .Where(company => company.Name != null && company.Name.Contains(keyword))
             .ToListAsync();
     }
 
     public async Task<Company?> GetByEmailAsync(string email)
     {
-        var query = _context.Companies.AsNoTracking();
-
-        if (string.IsNullOrWhiteSpace(email))
-            return null;
-
         email = email.Trim();
 
-        return await query
+        return await _context.Companies
+            .AsNoTracking()
             .FirstOrDefaultAsync(company => company.Email != null && company.Email == email);
     }
 
     public async Task<Company?> GetByPhoneAsync(string phone)
     {
-        var query = _context.Companies.AsNoTracking();
-
-        if (string.IsNullOrWhiteSpace(phone))
-            return null;
-
         phone = phone.Trim();
 
-        return await query
+        return await _context.Companies
+            .AsNoTracking()
             .FirstOrDefaultAsync(company => company.PhoneNumber != null && company.PhoneNumber == phone);
     }
 
     public async Task<List<Company>> GetByIndustryAsync(string industry)
     {
-        var query = _context.Companies
-            .AsNoTracking();
-
-        if (string.IsNullOrWhiteSpace(industry))
-            return [];
-
         industry = industry.Trim();
 
-        return await query
+        return await _context.Companies
+            .AsNoTracking()
             .Where(company => company.Industry != null && company.Industry == industry)
             .ToListAsync();
     }
 
     public async Task<bool> ExistsByEmailAsync(string email)
     {
-        var query = _context.Companies;
-
-        if (string.IsNullOrWhiteSpace(email))
-            return false;
-
         email = email.Trim();
 
-        return await query.AnyAsync(c => c.Email != null && c.Email == email);
+        return await _context.Companies.AnyAsync(c => c.Email != null && c.Email == email);
     }
 
     public async Task<bool> ExistsByPhoneAsync(string phone)
     {
-        var query = _context.Companies;
-
-        if (string.IsNullOrWhiteSpace(phone))
-            return false;
-
         phone = phone.Trim();
 
-        return await query.AnyAsync(c => c.PhoneNumber != null && c.PhoneNumber == phone);
+        return await _context.Companies.AnyAsync(c => c.PhoneNumber != null && c.PhoneNumber == phone);
     }
 
-    // TODO: Անվանումը կարող է կրկնվել | Task<bool> ExistsByNameAsync(string name);
-
-    public async Task<bool> ExistsByNameAndAddressAsync(string name, Address? address)
+    public async Task<bool> ExistsByNameAsync(string name)
     {
-        if (string.IsNullOrWhiteSpace(name) || address is null)
+        if (string.IsNullOrWhiteSpace(name))
             return false;
 
+        name = name.Trim();
+
+        return await _context.Companies.AnyAsync(company => company.Name == name);
+    }
+
+    public async Task<bool> ExistsByNameAndAddressAsync(string name, Address address)
+    {
         name = name.Trim();
 
         return await _context.Companies.AnyAsync(company =>
@@ -163,33 +140,4 @@ public class CompanyRepository : ICompanyRepository
     public async Task<int> GetDealCountAsync(int id)
             => await _context.Deals
             .CountAsync(deal => deal.CompanyId == id);
-
-    public async Task ActivateAsync(int id)
-    {
-        Company? company = await _context.Companies.FindAsync(id);
-        if (company is null || company.IsActive)
-            return;
-
-        company.IsActive = true;
-    }
-
-    public async Task DeactivateAsync(int id)
-    {
-        Company? company = await _context.Companies.FindAsync(id);
-        if (company is null || !company.IsActive)
-            return;
-
-        company.IsActive = false;
-        await _context.SaveChangesAsync();
-    }
-
-    public Task<bool> ExistsByNameAsync(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> ExistsByNameAndAddressAsync(string name, int addressId)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -13,8 +13,6 @@ public class CustomerDetailsDto
 
     public string? Phone { get; set; }
 
-    public DateTime? Created { get; set; }
-
     public AddressDto Address { get; set; } = null!;
 
     public CustomerStatus Status { get; set; }

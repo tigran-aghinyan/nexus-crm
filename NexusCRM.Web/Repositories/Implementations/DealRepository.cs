@@ -3,7 +3,6 @@ using NexusCRM.Web.Data;
 using NexusCRM.Web.Entities;
 using NexusCRM.Web.Entities.Enums;
 using NexusCRM.Web.Repositories.Interfaces;
-using System.ComponentModel.Design;
 
 namespace NexusCRM.Web.Repositories.Implementations;
 
@@ -67,9 +66,6 @@ public class DealRepository : IDealRepository
 
     public async Task<List<Deal>> SearchAsync(string keyword)
     {
-        if (string.IsNullOrWhiteSpace(keyword))
-            return [];
-
         keyword = keyword.Trim();
 
         return await _context.Deals
@@ -98,59 +94,6 @@ public class DealRepository : IDealRepository
         .Include(deal => deal.Company)
         .ToListAsync();
 
-    public async Task ChangeStatusAsync(int id, DealStatus status)
-    {
-        Deal? deal = await _context.Deals.FindAsync(id);
-
-        if (deal is null || deal.Status == status)
-            return;
-
-        deal.Status = status;
-    }
-
-    public async Task CloseAsWonAsync(int id)
-    {
-        Deal? deal = await _context.Deals.FindAsync(id);
-
-        if(deal is null || deal.Status == DealStatus.Ended)
-            return;
-
-        deal.Status = DealStatus.Ended;
-    }
-
-    public async Task CloseAsLostAsync(int id)
-    {
-        Deal? deal = await _context.Deals.FindAsync(id);
-
-        if (deal is null || deal.Status == DealStatus.Cancelled)
-            return;
-
-        deal.Status = DealStatus.Cancelled;
-    }
-
-    public async Task UpdateEstimatedValueAsync(int id, decimal value)
-    {
-        Deal? deal = await _context.Deals.FindAsync(id);
-
-        if (deal is null ||
-            value < 0 ||
-            deal.EstimatedValue == value)
-            return;
-
-        deal.EstimatedValue = value;
-    }
-
-
-    public async Task UpdateDeadlineAsync(int id, DateTime? deadline)
-    {
-        Deal? deal = await _context.Deals.FindAsync(id);
-
-        if(deal is null) return;
-        if(deal.Deadline == deadline) return;
-
-        deal.Deadline = deadline;
-    }
-
     public async Task<decimal> GetTotalEstimatedValueByCompanyAsync(int companyId)
         => await _context.Deals
         .Where(deal => deal.CompanyId == companyId)
@@ -173,10 +116,5 @@ public class DealRepository : IDealRepository
         return await _context.Deals
             .Where(deal => deal.CompanyId == companyId)
             .AnyAsync(deal => deal.Title == title);
-    }
-
-    public Task<bool> ExistsByTitleAsync(string title)
-    {
-        throw new NotImplementedException();
     }
 }

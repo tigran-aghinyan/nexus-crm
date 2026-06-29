@@ -1,6 +1,4 @@
-﻿using NexusCRM.Web.Entities;
 using NexusCRM.Web.Entities.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace NexusCRM.Web.DTOs.Customers;
 
@@ -19,9 +17,5 @@ public class DealSummaryDto
 
     public int CustomerId { get; set; }
 
-    public Customer? Customer { get; set; }
-
     public int? CompanyId { get; set; }
-
-    public Company? Company { get; set; }
 }
